@@ -1,6 +1,8 @@
 #!/bin/env python3
 
+
 # Given a list file of SRA accession numbers, this script is intented to download the corresponding reads from NCBI.
+# REQUIRED SOFTWARES: sra-toolkit, fastqc
 # The final output would be a directory structured as follow:
 #
 # ./
@@ -25,12 +27,13 @@
 
 import subprocess, argparse, sys
 
-################################
-#     Reading arguments in     #
-################################
+
+############################################
+#     Defining arguments of the script     #
+############################################
 
 # Initialise the parser class
-parser = argparse.ArgumentParser(description = 'Download reads from NCBI through the sra-tool and perform quality check')
+parser = argparse.ArgumentParser(description = 'Download reads from NCBI through the sra-tool')
 
 # Define some options/arguments/parameters
 parser.add_argument('-i', '--input', help = 'Path to input file. Note that it should be a list of SRA accession numbers')
@@ -43,76 +46,68 @@ parser.parse_args(args = None if sys.argv[1:] else ['--help'])
 args = parser.parse_args()
 
 
+output_dir = args.output_dir
+
+
 ##########################################################################
 #     Defining functions to download reads and perform quality check     #
 ##########################################################################
 
-
-def download_reads_and_qc(accession):
+# Function to download the SRA file, given the SRA accession number
+def download_sra(sra):
     try:
         # Download SRA
-        print(f"-- {accession} --")
-        print("  Downloading the sra file")
-        prefetch_process = subprocess.run(f"prefetch -O {output_dir}/ {accession}",
+        prefetch_process = subprocess.run(f"prefetch -O {output_dir}/ {sra}",
                                           shell = True,
                                           capture_output = True,
                                           text = True)
+        
+    except subprocess.CalledProcessError as err:
+        print("An error occured:", err.stderr)
 
+
+# Function to download the fastq file, given the SRA file
+def download_fastq(sra_file):
+    try:
         # Download fastqs
-        SRA_file = output_dir + "/" + accession + "/*sra*"
-        fastq_output_dir = output_dir + "/" + accession
-
-        print("  Downloading the fastq files")
-        fastqdump_process = subprocess.run(f"fastq-dump --defline-seq '@$sn[_$rn]/$ri' --split-files {SRA_file} -O {fastq_output_dir}",
+        fastqdump_process = subprocess.run(f"fastq-dump --defline-seq '@$sn[_$rn]/$ri' --split-files {sra_file} -O {fastq_output_dir}",
                                            shell = True,
                                            capture_output = True,
                                            text = True)
+    
+    except subprocess.CalledProcessError as err:
+        print("An error occured:", err.stderr)
         
 
-        # Quality check
-        print("  Checking read quality")
-        fastqc_process = subprocess.run(f"fastqc {fastq_output_dir}/*fastq -o {output_dir}/01_fastqc -f fastq",
+# Function to perform the quality check, given the fastq file
+def quality_check(fastq_file):
+    try:
+        fastqc_process = subprocess.run(f"fastqc {fastq_file} -o {output_dir}/01_fastqc -f fastq",
                                         shell = True,
                                         capture_output = True,
                                         text = True)
-
-        # Gzip fastq files
-        print("  Gzipping fastq files")
-        subprocess.run(f"gzip -9 {fastq_output_dir}/*fastq",
-                       shell = True)
-        
-        # Remove sra files
-        print("  Removing the sra file")
-        subprocess.run(f"rm {SRA_file}",
-                       shell = True)
-        
-        print(f"Done")
-        print()
-
 
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
 
 
-###############################
-#     Reading SRA list in     #
-###############################
-
-
-SRA_list = []
+############################
+#     Reading SRA list     #
+############################
 
 # Create output direcotory
-output_dir = args.output_dir
 print()
 print(f"Creating output directory in {output_dir}/")
 subprocess.run(f"mkdir -p {output_dir}/01_fastqc", shell = True)
 
+# Read in SRA list and store into a list object
+SRA_list = []
 with open(args.input) as input_SRA:
     for line in input_SRA.readlines():
         SRA_list.append(line.strip())
 
 print()
-print(f"Reading in {len(SRA_list)} accession numbers")
+print(f"Read {args.input}: {len(SRA_list)} accession numbers found")
 print()
 
 
@@ -120,9 +115,36 @@ print()
 #     Download reads and perform quality check     #
 ####################################################
 
-
 for SRA in SRA_list:
-    download_reads_and_qc(SRA)
+
+    # Download SRA
+    print(f"-- {SRA} --")
+    print("  Retrieving SRA files...")
+    download_sra(SRA)
 
 
+    # Download fastq
+    SRA_file = output_dir + "/" + SRA + "/*sra*"
+    fastq_output_dir = output_dir + "/" + SRA
+    print("  Retrieving fastq files...")
+    download_fastq(SRA_file)
 
+
+    # Quality check
+    FASTQ_file = fastq_output_dir + "/*fastq"
+    print("  Checking read quality...")
+
+    quality_check(SRA)
+
+    # Gzip fastq files
+    print("  Gzipping fastq files...")
+    subprocess.run(f"gzip -9 {fastq_output_dir}/*fastq",
+                    shell = True)
+    
+    # Remove sra files
+    print("  Removing the sra file...")
+    subprocess.run(f"rm {SRA_file}",
+                    shell = True)
+    
+    print(f"Done")
+    print()
