@@ -3,6 +3,7 @@
 
 # Given a list file of SRA accession numbers, this script is intented to download the corresponding reads from NCBI.
 # REQUIRED SOFTWARES: sra-toolkit, fastqc
+#
 # The final output would be a directory structured as follow:
 #
 # ./
@@ -10,19 +11,19 @@
 #     ├── 01_fastq/
 #     |   └── {results of fastqc analysis}
 #     ├── SRRXXXXXX1/
-#     |   ├── SRRXXXXXX1_1_fastq.gz
-#     |   └── SRRXXXXXX1_2_fastq.gz
+#     |   ├── SRRXXXXXX1_1.fastq.gz
+#     |   └── SRRXXXXXX1_2.fastq.gz
 #     ├── SRRXXXXXX2/
-#     |   ├── SRRXXXXXX2_1_fastq.gz
-#     |   └── SRRXXXXXX2_2_fastq.gz
+#     |   ├── SRRXXXXXX2_1.fastq.gz
+#     |   └── SRRXXXXXX2_2.fastq.gz
 #     ...
 #     └── SRRXXXXXXN/
-#         ├── SRRXXXXXXN_1_fastq.gz
-#         └── SRRXXXXXXN_2_fastq.gz
+#         ├── SRRXXXXXXN_1.fastq.gz
+#         └── SRRXXXXXXN_2.fastq.gz
 #
 #
 # Written by:   Filippo Nicolini
-# Last updated: 06/10/2023
+# Last updated: 09/10/2023
 
 
 import subprocess, argparse, sys
@@ -33,14 +34,14 @@ import subprocess, argparse, sys
 ############################################
 
 # Initialise the parser class
-parser = argparse.ArgumentParser(description = 'Download reads from NCBI through the sra-tool')
+parser = argparse.ArgumentParser(description = "Download reads from NCBI through the sra-tool and perform quality check")
 
 # Define some options/arguments/parameters
-parser.add_argument('-i', '--input', help = 'Path to input file. Note that it should be a list of SRA accession numbers')
-parser.add_argument('-o', '--output_dir', help = 'Name of the output directory', default = "01_raw_reads")
+parser.add_argument("-i", "--input", required = True, help = "Path to input file. Note that it should be a list of SRA accession numbers")
+parser.add_argument("-o", "--output_dir", help = "Name of the output directory", default = "01_raw_reads")
 
 # This line checks if the user gave no arguments, and if so then print the help
-parser.parse_args(args = None if sys.argv[1:] else ['--help'])
+parser.parse_args(args = None if sys.argv[1:] else ["--help"])
 
 # Collect the inputted arguments into a dictionary
 args = parser.parse_args()
@@ -133,8 +134,7 @@ for SRA in SRA_list:
     # Quality check
     FASTQ_file = fastq_output_dir + "/*fastq"
     print("  Checking read quality...")
-
-    quality_check(SRA)
+    quality_check(FASTQ_file)
 
     # Gzip fastq files
     print("  Gzipping fastq files...")
@@ -146,5 +146,5 @@ for SRA in SRA_list:
     subprocess.run(f"rm {SRA_file}",
                     shell = True)
     
-    print(f"Done")
+    print("Done")
     print()
