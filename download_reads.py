@@ -26,7 +26,7 @@
 # Last updated: 09/10/2023
 
 
-import subprocess, argparse, sys
+import subprocess, argparse, sys, os
 
 
 ############################################
@@ -96,10 +96,10 @@ def quality_check(fastq_file):
 #     Reading SRA list     #
 ############################
 
-# Create output direcotory
-print()
-print(f"Creating output directory in {output_dir}/")
-subprocess.run(f"mkdir -p {output_dir}/01_fastqc", shell = True)
+if not os.path.isdir(args.output_dir):
+    print()
+    print(f"Creating output directory in {args.output_dir}/")
+    subprocess.run(f"mkdir {args.output_dir}", shell = True)
 
 # Read in SRA list and store into a list object
 SRA_list = []
