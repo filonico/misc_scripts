@@ -50,9 +50,12 @@ args = parser.parse_args()
 output_dir = args.output_dir
 
 
-##########################################################################
-#     Defining functions to download reads and perform quality check     #
-##########################################################################
+#------------------------------------------------------------------------------------------
+
+
+##############################
+#     Defining functions     #
+##############################
 
 # Function to download the SRA file, given the SRA accession number
 def download_sra(sra):
@@ -123,13 +126,11 @@ for SRA in SRA_list:
     print("  Retrieving SRA files...")
     download_sra(SRA)
 
-
     # Download fastq
     SRA_file = output_dir + "/" + SRA + "/*sra*"
     fastq_output_dir = output_dir + "/" + SRA
     print("  Retrieving fastq files...")
     download_fastq(SRA_file)
-
 
     # Quality check
     FASTQ_file = fastq_output_dir + "/*fastq"

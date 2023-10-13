@@ -59,9 +59,9 @@ parser.parse_args(args = None if sys.argv[1:] else ["--help"])
 args = parser.parse_args()
 
 
-##########################################################################
-#     Defining functions to download reads and perform quality check     #
-##########################################################################
+##############################
+#     Defining functions     #
+##############################
 
 # Function to trim reads, given a directory containing paired fastq files
 def trim_reads(input_directory, acc, trim_output_dir):
@@ -92,6 +92,10 @@ def quality_check(fastq_file):
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
 
+
+#------------------------------------------------------------------------------------------
+
+
 ###############################################
 #     Trim read and perform quality check     #
 ###############################################
@@ -105,13 +109,11 @@ else:
 # Define a variable to store the name of the output directory of trimmed reads
 TRIM_OUTPUT_DIR = args.output_dir + "/" + ACC + "_trimmed"
 
-
 # Create output direcotory
 if not os.path.isdir(args.output_dir):
     print()
     print(f"Creating output directory in {args.output_dir}/")
     subprocess.run(f"mkdir -p {args.output_dir}/01_fastqc", shell = True)
-
 
 # Trim reads
 print()
@@ -119,12 +121,10 @@ print(f"-- {ACC} --")
 print("  Trimming reads...")
 trim_reads(args.input_dir, ACC, TRIM_OUTPUT_DIR)
 
-
 # Quality check
 FASTQ_file = args.output_dir + "/" + ACC + "_trimmed/*_paired.fastq.gz"
 print("  Checking read quality...")
 quality_check(FASTQ_file)
-
 
 print("Done")
 print()
