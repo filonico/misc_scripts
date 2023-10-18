@@ -37,7 +37,7 @@ parser = argparse.ArgumentParser(description = "Download genome assembly feature
 # Define some options/arguments/parameters
 parser.add_argument("-i", "--input_file",
                     required = True,
-                    help = "Path to input file. If a tsv, note that accession numbers should be on the first column and speciesID on the second.")
+                    help = "A list or tsv file with assembly accession numbers to download. If a tsv, note that accession numbers should be on the first column; if speciesIDs are also required in output directory name, they should be placed on the second column.")
 
 parser.add_argument("-d", "--datasets_path",
                     required = True,

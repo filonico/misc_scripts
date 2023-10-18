@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser(description = "Generate IDs for a list of speci
 # Define some options/arguments/parameters
 parser.add_argument("-i", "--input_file",
                     required = True,
-                    help = "Path to input file. Note that it should be a list of species names.")
+                    help = "A list of species names to be converted into species ID.")
 
 parser.add_argument("-dup", "--allow_duplicates",
                     action = "store_true",

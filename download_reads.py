@@ -37,8 +37,13 @@ import subprocess, argparse, sys, os
 parser = argparse.ArgumentParser(description = "Download reads from NCBI through the sra-tool and perform quality check")
 
 # Define some options/arguments/parameters
-parser.add_argument("-i", "--input", required = True, help = "Path to input file. Note that it should be a list of SRA accession numbers")
-parser.add_argument("-o", "--output_dir", help = "Name of the output directory", default = "01_raw_reads")
+parser.add_argument("-i", "--input",
+                    required = True,
+                    help = "A list of SRA accession numbers")
+
+parser.add_argument("-o", "--output_dir",
+                    help = "Name of the output directory",
+                    default = "01_raw_reads")
 
 # This line checks if the user gave no arguments, and if so then print the help
 parser.parse_args(args = None if sys.argv[1:] else ["--help"])
