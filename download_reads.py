@@ -23,7 +23,7 @@
 #
 #
 # Written by:   Filippo Nicolini
-# Last updated: 09/10/2023
+# Last updated: 18/10/2023
 
 
 import subprocess, argparse, sys, os
@@ -53,9 +53,6 @@ args = parser.parse_args()
 
 
 output_dir = args.output_dir
-
-
-#------------------------------------------------------------------------------------------
 
 
 ##############################
@@ -98,6 +95,10 @@ def quality_check(fastq_file):
 
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
+
+
+
+#------------------------------------------------------------------------------------------
 
 
 ############################
