@@ -32,7 +32,7 @@ import subprocess, argparse, sys, os
 ############################################
 
 # Initialise the parser class
-parser = argparse.ArgumentParser(description = "Download genome assembly features from NCBI through the datasets utility")
+parser = argparse.ArgumentParser(description = "Download genome assembly features from NCBI through the datasets utility.")
 
 # Define some options/arguments/parameters
 parser.add_argument("-i", "--input_file",
@@ -45,15 +45,15 @@ parser.add_argument("-d", "--datasets_path",
 
 parser.add_argument("-spID", "--species_ID",
                     action = "store_true",
-                    help = "Include the species ID of the species in the name of output directory. (default False)",
+                    help = "Include the species ID of the species in the name of output directory. Default: False",
                     default = False)
 
 parser.add_argument("-f", "--features",
-                    help = "Features of the assembly to be downloaded. Please provided a comma separated string. (defaul: genome,rna,protein,cds,gff3,gtf,gbff,seq-report)",
+                    help = "Features of the assembly to be downloaded. Please provided a comma separated string. Defaul: genome,rna,protein,cds,gff3,gtf,gbff,seq-report",
                     default = "genome,rna,protein,cds,gff3,gtf,gbff,seq-report")
 
 parser.add_argument("-o", "--output_dir",
-                    help = "Name of the output directory (default \"00_datasets\")",
+                    help = "Name of the output directory. Default \"00_datasets\"",
                     default = "00_datasets")
 
 # This line checks if the user gave no arguments, and if so then print the help

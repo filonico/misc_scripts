@@ -34,15 +34,15 @@ import subprocess, argparse, sys, os
 ############################################
 
 # Initialise the parser class
-parser = argparse.ArgumentParser(description = "Download reads from NCBI through the sra-tool and perform quality check")
+parser = argparse.ArgumentParser(description = "Download reads from NCBI through the sra-tool and perform quality check.")
 
 # Define some options/arguments/parameters
 parser.add_argument("-i", "--input",
                     required = True,
-                    help = "A list of SRA accession numbers")
+                    help = "A list of SRA accession numbers.")
 
 parser.add_argument("-o", "--output_dir",
-                    help = "Name of the output directory",
+                    help = "Name of the output directory.",
                     default = "01_raw_reads")
 
 # This line checks if the user gave no arguments, and if so then print the help

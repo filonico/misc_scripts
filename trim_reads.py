@@ -48,9 +48,17 @@ import subprocess, argparse, sys, os
 parser = argparse.ArgumentParser(description = "Trim reads using Trimmomatic and perform quality check.")
 
 # Define some options/arguments/parameters
-parser.add_argument("-d", "--input_dir", required = True, help = "Directory containing paired fastq files to trim. Note that the structure of input directory should be as follow: input_dir/{input_dir_1.fastq.gz, input_dir_2.fastq.gz}")
-parser.add_argument("-adapt", "--illumina_adapters", required = True, help = "File containing Illumina adapters.")
-parser.add_argument("-o", "--output_dir", help = "Name of the output directory.", default = "02_trimmed_reads")
+parser.add_argument("-d", "--input_dir",
+                    required = True,
+                    help = "Directory containing paired fastq files to trim. Note that the structure of input directory should be as follow: input_dir/{input_dir_1.fastq.gz, input_dir_2.fastq.gz}")
+
+parser.add_argument("-adapt", "--illumina_adapters",
+                    required = True,
+                    help = "File containing Illumina adapters.")
+
+parser.add_argument("-o", "--output_dir",
+                    help = "Name of the output directory.",
+                    default = "02_trimmed_reads")
 
 # This line checks if the user gave no arguments, and if so then print the help
 parser.parse_args(args = None if sys.argv[1:] else ["--help"])
