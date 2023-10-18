@@ -29,9 +29,9 @@
 import subprocess, argparse, sys, os
 
 
-############################################
-#     Defining arguments of the script     #
-############################################
+##########################################
+#     Define arguments of the script     #
+##########################################
 
 # Initialise the parser class
 parser = argparse.ArgumentParser(description = "Download reads from NCBI through the sra-tool and perform quality check.")
@@ -55,9 +55,9 @@ args = parser.parse_args()
 output_dir = args.output_dir
 
 
-##############################
-#     Defining functions     #
-##############################
+############################
+#     Define functions     #
+############################
 
 # Function to download the SRA file, given the SRA accession number
 def download_sra(sra):
@@ -101,9 +101,9 @@ def quality_check(fastq_file):
 #------------------------------------------------------------------------------------------
 
 
-############################
-#     Reading SRA list     #
-############################
+#########################
+#     Read SRA list     #
+#########################
 
 if not os.path.isdir(args.output_dir):
     print()
