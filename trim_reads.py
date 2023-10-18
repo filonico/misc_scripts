@@ -52,7 +52,7 @@ parser.add_argument("-d", "--input_dir",
                     required = True,
                     help = "Directory containing paired fastq files to trim. Note that the structure of input directory should be as follow: input_dir/{input_dir_1.fastq.gz, input_dir_2.fastq.gz}")
 
-parser.add_argument("-adapt", "--illumina_adapters",
+parser.add_argument("-a", "--illumina_adapters",
                     required = True,
                     help = "File containing Illumina adapters.")
 

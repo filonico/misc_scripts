@@ -26,7 +26,7 @@ parser.add_argument("-i", "--input_file",
                     required = True,
                     help = "A list of species names to be converted into species ID.")
 
-parser.add_argument("-dup", "--allow_duplicates",
+parser.add_argument("-d", "--allow_duplicates",
                     action = "store_true",
                     help = "Allow duplicated IDs. Default: \"False\"",
                     default = False)

@@ -27,9 +27,9 @@
 import subprocess, argparse, sys, os
 
 
-############################################
-#     Defining arguments of the script     #
-############################################
+##########################################
+#     Define arguments of the script     #
+##########################################
 
 # Initialise the parser class
 parser = argparse.ArgumentParser(description = "Download genome assembly features from NCBI through the datasets utility.")
@@ -43,7 +43,7 @@ parser.add_argument("-d", "--datasets_path",
                     required = True,
                     help = "Full path to the \"datasets\" executable.")
 
-parser.add_argument("-spID", "--species_ID",
+parser.add_argument("-s", "--species_ID",
                     action = "store_true",
                     help = "Include the species ID of the species in the name of output directory. Default: False",
                     default = False)
@@ -63,9 +63,9 @@ parser.parse_args(args = None if sys.argv[1:] else ["--help"])
 args = parser.parse_args()
 
 
-##############################
-#     Defining functions     #
-##############################
+############################
+#     Define functions     #
+############################
 
 # Function to retrieve genome assembly feature
 
@@ -99,8 +99,7 @@ print(f"Reading {args.input_file}...")
 
 acc_list = []
 with open(args.input_file) as input_acc:
-    for line in input_acc.readlines():
-        acc_list.append(line.strip().split("\t"))
+    [acc_list.append(line.strip().split("\t")) for line in input_acc.readlines()]
 
 print(f"    {len(acc_list)} genome assembly accession numbers found.")
 print("    " + args.features.replace(",", ", ") + " will be downloaded for each of them.")
