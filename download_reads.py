@@ -108,7 +108,7 @@ def quality_check(fastq_file):
 if not os.path.isdir(args.output_dir):
     print()
     print(f"Creating output directory in {args.output_dir}/")
-    subprocess.run(f"mkdir {args.output_dir}", shell = True)
+    subprocess.run(f"mkdir -p {args.output_dir}/01_fastqc", shell = True)
 
 # Read in SRA list and store into a list object
 SRA_list = []
