@@ -85,6 +85,7 @@ def trim_reads(input_directory, acc, trim_output_dir):
                                              shell = True,
                                              capture_output = True,
                                              text = True)
+        trimmomatic_process.check_returncode()
         
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
@@ -96,6 +97,7 @@ def quality_check(fastq_file):
                                         shell = True,
                                         capture_output = True,
                                         text = True)
+        fastqc_process.check_returncode()
 
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
