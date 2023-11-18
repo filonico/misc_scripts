@@ -38,7 +38,7 @@ parser = argparse.ArgumentParser(description = "Map reads against a reference tr
 # Define some options/arguments/parameters
 parser.add_argument("-d", "--input_dir", required = True, help = "Directory containing trimmed paired fastq files to map. Note that the structure of input directory should be as follow: input_dir/{input_dir_1.fastq.gz, input_dir_2.fastq.gz}")
 parser.add_argument("-ref", "--reference_transcriptome", required = True, help = "Reference transcriptome used to map reads.")
-parser.add_argument("-o", "--output_dir", help = "Name of the output directory.", default = "04_mappings")
+parser.add_argument("-o", "--output_dir", help = "Name of the output directory.")
 
 # This line checks if the user gave no arguments, and if so then print the help
 parser.parse_args(args = None if sys.argv[1:] else ["--help"])
