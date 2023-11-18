@@ -68,6 +68,7 @@ def map_reads(input_directory, acc, indexed_transcriptome, output_directory):
                                         shell = True,
                                         capture_output = True,
                                         text = True)
+        bowtie_process.check_returncode()
         
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
@@ -81,6 +82,7 @@ def from_sam_to_rawcounts(sam_file, acc, indexed_transcriptome, output_directory
                                               shell = True,
                                               capture_output = True,
                                               text = True)
+        generate_bam_process.check_returncode()
         
         # Remove sam file
         subprocess.run(f"rm {output_acc}.mapped.sam", shell = True)
@@ -92,6 +94,7 @@ def from_sam_to_rawcounts(sam_file, acc, indexed_transcriptome, output_directory
                                                shell = True,
                                                capture_output = True,
                                                text = True)
+        sort_n_filter_process.check_returncode()
         
         # Get raw counts statistics out of bam file
         get_rowcounts_process = subprocess.run(f"samtools index {output_acc}.mapped.sorted.filtered.bam && "
@@ -100,6 +103,7 @@ def from_sam_to_rawcounts(sam_file, acc, indexed_transcriptome, output_directory
                                                shell = True,
                                                capture_output = True,
                                                text = True)
+        get_rowcounts_process.check_returncode()
     
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
