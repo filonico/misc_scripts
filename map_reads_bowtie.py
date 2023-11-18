@@ -33,7 +33,7 @@ import subprocess, argparse, sys, os
 ############################################
 
 # Initialise the parser class
-parser = argparse.ArgumentParser(description = "Trim reads using Trimmomatic and perform quality check.")
+parser = argparse.ArgumentParser(description = "Map reads against a reference transcriptome using bowtie, than index and sort the resulting bam file.")
 
 # Define some options/arguments/parameters
 parser.add_argument("-d", "--input_dir", required = True, help = "Directory containing trimmed paired fastq files to map. Note that the structure of input directory should be as follow: input_dir/{input_dir_1.fastq.gz, input_dir_2.fastq.gz}")
