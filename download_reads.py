@@ -67,6 +67,7 @@ def download_sra(sra):
                                           shell = True,
                                           capture_output = True,
                                           text = True)
+        prefetch_process.check_returncode()
         
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
@@ -80,6 +81,7 @@ def download_fastq(sra_file):
                                            shell = True,
                                            capture_output = True,
                                            text = True)
+        fastqdump_process.check_returncode()
     
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
@@ -92,6 +94,7 @@ def quality_check(fastq_file):
                                         shell = True,
                                         capture_output = True,
                                         text = True)
+        fastq_process.check_returncode()
 
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)
