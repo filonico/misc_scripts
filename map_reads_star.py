@@ -175,11 +175,5 @@ OUTPUT_PREFIX = args.output_dir + "/" + ACC + "_"
 print("  Mapping reads...")
 map_reads(args.genome_index_directory, READFILES, args.reference_annotation, OUTPUT_PREFIX)
 
-# # Convert to bam and get raw count statistics
-# SAM_file = args.output_dir + "/" + ACC + ".mapped.sam"
-
-# print("  Converting sam to bam and getting raw counts...")
-# from_sam_to_rawcounts(SAM_file, ACC, args.reference_genome, args.output_dir)
-
 print("Done")
 print()
