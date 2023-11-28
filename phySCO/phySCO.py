@@ -29,7 +29,7 @@
 #
 #-------------------------------------------------------------------------------
 
-import subprocess, argparse, sys, os, glob
+import subprocess, argparse, sys, os, glob, math
 from argparse import RawTextHelpFormatter
 
 
@@ -153,6 +153,8 @@ else:
 speciesID_list = [os.path.basename(i).split("_")[0] for i in os.listdir(INPUT_DIR)]
 print(f"{len(speciesID_list)} species identifier found in {INPUT_DIR}/:")
 print("    " + ", ".join(speciesID_list) + ".")
+print(f"    {int(math.ceil(len(speciesID_list)*args.occupancy_threshold))} is the minimum number of species to keep a gene for downstream analysis\n"
+      f"(occupancy threshold: {int(args.occupancy_threshold*100)}%).")
 print()
 
 # Get the list of all the complete BUSCO genes found in the input species
