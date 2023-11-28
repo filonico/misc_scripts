@@ -224,7 +224,7 @@ for gene in gene_list:
         else:
             continue
         
-    if 'genes_to_keep' in globals() and kept_genes == 'genes_to_keep':
+    if 'genes_to_keep' in globals() and kept_genes == genes_to_keep:
         break
             
 print(f"    {discarded_genes} genes were discarded because didn't meet the occupancy threshold ({args.occupancy_threshold}).")
