@@ -109,14 +109,14 @@ parser.add_argument("-i", "--input_dir",
                     help = "Directory containing the default BUSCO output for each species.",
                     required = True)
 
+parser.add_argument("-o", "--output_dir", 
+                    help = "Name of the output directory. (Default = ML_phylogey)",
+                    default = "ML_phylogeny")
+
 parser.add_argument("-t", "--occupancy_threshold",
                     type = range_limited_float_type,
                     help = "Range: 0-1. The minimum percentage of species required to keep a gene. E.g., if this argument is set to 0.8, all the genes that are present in less than the 80%% of species will be discarded from the phylogenetic analysis. (Default = 0.85)",
                     default = 0.85)
-
-parser.add_argument("-o", "--output_dir", 
-                    help = "Name of the output directory. (Default = ML_phylogey)",
-                    default = "ML_phylogeny")
 
 # This line checks if the user gave no arguments, and if so then print the help
 parser.parse_args(args = None if sys.argv[1:] else ["--help"])
@@ -298,7 +298,7 @@ print("Inferring ML phylogenetic tree with IQ-TREE...\n"
 # alignments_file_list = os.listdir(alignments_dir)
 
 try:
-    iqtree_process = subprocess.run(f"iqtree2 -p {trim_dir} -m MFP --merge -nstop 500 -T AUTO -bb 1000 --runs 5 --prefix {args.output_dir}/MLtree",
+    iqtree_process = subprocess.run(f"iqtree2 -p {trim_dir} -m MFP --merge -rcluster 25 -nstop 500 -T AUTO -bb 1000 --runs 5 --prefix {args.output_dir}/MLtree",
                                     shell = True,
                                     capture_output = True,
                                     text = True)
