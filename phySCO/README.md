@@ -23,6 +23,7 @@ Here is the list of software that phySCO requires:
 You can install all of them directly from the [<code>phySCO_env.yml</code>](./phySCO_env.yml) YAML file, through the command:
 ```
 conda env create -f phySCO_env.yml
+conda activate phySCO_env
 ```
 
 ## Example dataset
