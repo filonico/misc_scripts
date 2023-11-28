@@ -1,10 +1,8 @@
-# phySCO
+# Welcome to phySCO!
 
-**Welcome to phySCO!**
+phySCO is a python script that infers maximum likelihood <ins>phy</ins>logenomic tree using BUSCO <ins>s</ins>ingle-<ins>c</ins>opy <ins>o</ins>rthologous genes. phySCO retrieves these genes from already-available BUSCO results (that is, phySCO *does not* run BUSCO itself).
 
-phySCO is a python script that infers maximum likelihood <ins>phy</ins>logenomic tree using BUSCO <ins>s</ins>ingle-<ins>c</ins>opy <ins>o</ins>rthologous genes.
-
-> phySCO is ***strongly*** under development!
+> Be kind with phySCO, it's not supposed to be a proper software (yet)
 
 Many thanks to [NiccoloRighetti](https://github.com/NiccoloRighetti), whose work has pushed me to start writing this code.
 
