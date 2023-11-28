@@ -1,0 +1,10 @@
+Bbub
+Dnov
+Drot
+Emax
+Hamp
+Hsap
+Mdom
+Mjav
+Pafr
+Ttru
