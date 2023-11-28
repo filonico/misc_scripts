@@ -16,6 +16,7 @@ phySCO is currently able to process **just amino acid sequences** of complete si
 
 ## Required softwares and dependencies
 Here is the list of software that phySCO requires:
+* <code>python</code> (v3.11)
 * <code>mafft</code> (v7.505)
 * <code>trimal</code> (v1.4.rev15)
 * <code>IQTREE2</code> (2.1.4-beta COVID-edition)
