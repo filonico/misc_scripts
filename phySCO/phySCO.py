@@ -39,7 +39,7 @@ from argparse import RawTextHelpFormatter
 # We suggest to keep all the genes that phySCO can find, particularly when BUSCO scores are not so good.
 # If you want to keep all of your genes, just leave the following line as it is.
 #
-# genes_to_keep = 100
+genes_to_keep = 10
 
 
 #########################################
@@ -298,7 +298,7 @@ print("Inferring ML phylogenetic tree with IQ-TREE...\n"
 # alignments_file_list = os.listdir(alignments_dir)
 
 try:
-    iqtree_process = subprocess.run(f"iqtree2 -p {trim_dir} -m MFP --merge -rcluster 25 -nstop 500 -T AUTO -bb 1000 --runs 5 --prefix {args.output_dir}/MLtree",
+    iqtree_process = subprocess.run(f"iqtree2 -p {trim_dir} -m MFP --merge -rcluster 25 -nstop 500 -T 15 -bb 1000 --runs 5 --prefix {args.output_dir}/MLtree",
                                     shell = True,
                                     capture_output = True,
                                     text = True)
