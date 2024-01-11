@@ -94,7 +94,7 @@ def quality_check(fastq_file):
                                         shell = True,
                                         capture_output = True,
                                         text = True)
-        fastq_process.check_returncode()
+        fastqc_process.check_returncode()
 
     except subprocess.CalledProcessError as err:
         print("An error occured:", err.stderr)

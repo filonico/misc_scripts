@@ -47,12 +47,10 @@ parser.add_argument("-i", "--genome_index_directory",
                     required = True)
 
 parser.add_argument("-r", "--reference_genome",
-                    help = "Reference genome fasta file used to map reads.",
-                    required = True)
+                    help = "Reference genome fasta file used to map reads.")
 
 parser.add_argument("-a", "--reference_annotation",
-                    help = "Reference gtf annotation file used to map reads.",
-                    required = True)
+                    help = "Reference gtf annotation file used to map reads.")
 
 parser.add_argument("-o", "--output_dir", 
                     help = "Name of the output directory.",
