@@ -42,9 +42,9 @@ from argparse import RawTextHelpFormatter
 genes_to_keep = 10
 
 
-#########################################
-#     Define functions to map reads     #
-#########################################
+############################
+#     Define functions     #
+############################
 
 # Type function for argparse: a float within predefined bounds
 def range_limited_float_type(arg):
