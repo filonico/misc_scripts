@@ -9,4 +9,4 @@ else
 	OUTNAME="$1".tar.gz
 fi
 
-tar -cvf - "$1" | gzip -9 - > $OUTNAME
+tar -cvf - "$1" | gzip -v -9 - > $OUTNAME
