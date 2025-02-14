@@ -9,7 +9,7 @@
 #
 # If species ID are not to be included, please provide a file with genome assembly accesion number on the first column.
 #
-# REQUIRED SOFTWARES: datasets
+# REQUIRED SOFTWARES: datasets (either as an executable or within a conda env)
 #
 # The final output would be a directory structured as follow:
 #
@@ -21,7 +21,7 @@
 #     └── GCX.XXXXXXXXN.X[_spIDN].zip
 #
 # Written by:   Filippo Nicolini
-# Last updated: 13/10/2023
+# Last updated: 05/02/2025
 
 
 import subprocess, argparse, sys, os
@@ -40,8 +40,7 @@ parser.add_argument("-i", "--input_file",
                     help = "A list or tsv file with assembly accession numbers to download. If a tsv, note that accession numbers should be on the first column; if speciesIDs are also required in output directory name, they should be placed on the second column.")
 
 parser.add_argument("-d", "--datasets_path",
-                    required = True,
-                    help = "Full path to the \"datasets\" executable.")
+                    help = "Full path to the \"datasets\" executable, if not globally available.")
 
 parser.add_argument("-s", "--species_ID",
                     action = "store_true",
@@ -107,7 +106,8 @@ print()
 
 # Check if correct arguments have been passed to the script
 if args.species_ID and len(acc_list[0]) == 1:
-    print("Species ID is to be included in the name of output directory, but only a list has been provided.\n"
+    print("*** ERROR ***\n"
+          "Species ID is to be included in the name of output directory, but only a list has been provided.\n"
           "Please provide a tsv file or do not include species ID. See help message.")
     exit()
 
@@ -124,6 +124,10 @@ for assembly in acc_list:
 
     print(f"-- {assembly[0]} --")
     print("  Retrieving selected features...")
-    download_assembly_feature(assembly[0], args.datasets_path, args.features, output_name)
+
+    if args.datasets_path:
+        download_assembly_feature(assembly[0], args.datasets_path, args.features, output_name)
+    else:
+        download_assembly_feature(assembly[0], "datasets", args.features, output_name)
     print("Done")
     print()
