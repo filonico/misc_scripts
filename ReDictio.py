@@ -37,14 +37,18 @@ import argparse, sys, re
 parser = argparse.ArgumentParser(description = "test")
 
 # Define options/arguments/parameters
-parser.add_argument("target_file",
-                    help = "The file where you want to replace strings according to a dictionary. *DISCLAIMER*: please note that this script currently replaces ONLY EXTACT MACTHES, thus it does not replace substrings inside words.")
+parser.add_argument("-f", "--target_file",
+                    help = "The file where you want to replace strings according to a dictionary.")
 
-parser.add_argument("dictionary",
-                    help = "The file that is going to be used as a dictionary. The file has to be a tsv file where the first column is the list of strings you want to replace, and the second the list of the corresponding replacement patterns. REMOVE any header from your dictionary file!")
+parser.add_argument("-d", "--dictionary",
+                    help = "The file that is going to be used as a dictionary. The file has to be a tsv file where the first column is the list of strings you want to replace, and the second column the list of the corresponding replacement patterns. REMOVE any header from your dictionary file!")
 
-parser.add_argument("inplace_newFile",
-                    choices=["inplace", "new"],
+parser.add_argument("-m", "--exact_matches",
+                    default = False,
+                    help = "If True, replace only exact word matches. Default behaviour is to replace all occurrences (i.e., also substrings)")
+
+parser.add_argument("-i", "--inplace_newFile",
+                    choices = ["inplace", "new"],
                     help = "If you want to replace strings in the original file, type \"inplace\". If you want to keep the original file, type \"new\".")
 
 # This line checks if the user gave no arguments, and if so then print the help
@@ -68,10 +72,16 @@ with open(args.dictionary) as dictionary_file:
 with open(args.target_file, 'r') as target_file:
   filedata = target_file.read()
 
-# replace according to dictionary
-for key in dictionary:
-    replacement = r"\b" + re.escape(key) + r"\b"
-    filedata = re.sub(replacement, dictionary[key], filedata)
+if args.exact_matches is True:
+    # replace according to dictionary
+    for key in dictionary:
+        replacement = r"\b" + re.escape(key) + r"\b"
+        filedata = re.sub(replacement, dictionary[key], filedata)
+else:
+    # replace according to dictionary
+    for key in dictionary:
+        replacement = re.escape(key)
+        filedata = re.sub(replacement, dictionary[key], filedata)
 
 # replace in the original file if "inplace" is chosen
 if args.inplace_newFile == "inplace":
