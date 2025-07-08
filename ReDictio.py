@@ -70,7 +70,7 @@ with open(args.target_file, 'r') as target_file:
 
 # replace according to dictionary
 for key in dictionary:
-    replacement = r"\b" + key + r"\b"
+    replacement = r"\b" + re.escape(key) + r"\b"
     filedata = re.sub(replacement, dictionary[key], filedata)
 
 # replace in the original file if "inplace" is chosen
