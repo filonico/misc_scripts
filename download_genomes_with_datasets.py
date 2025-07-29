@@ -90,7 +90,7 @@ def download_assembly_feature(accession,exe_path,features,output):
 if not os.path.isdir(args.output_dir):
     print()
     print(f"Creating output directory in {args.output_dir}/")
-    subprocess.run(f"mkdir {args.output_dir}", shell = True)
+    subprocess.run(f"mkdir -p {args.output_dir}", shell = True)
 
 # Read in genome assembly accession list and store into a list object
 print()

@@ -74,12 +74,14 @@ with open(args.target_file, 'r') as target_file:
 
 if args.exact_matches is True:
     # replace according to dictionary
-    for key in dictionary:
+    for key in dictionary:    
+        print(f"replaing {key}")
         replacement = r"\b" + re.escape(key) + r"\b"
         filedata = re.sub(replacement, dictionary[key], filedata)
 else:
     # replace according to dictionary
     for key in dictionary:
+        print(f"replacing {key}")
         replacement = re.escape(key)
         filedata = re.sub(replacement, dictionary[key], filedata)
 
