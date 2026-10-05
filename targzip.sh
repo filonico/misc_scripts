@@ -1,12 +1,32 @@
 #!/bin/bash
 
-# $1 = directory you want to tar gzip
+# Usage: tarzip.sh <directory>
+# Creates <directory>.tar.gz whose top-level entry is the directory's own name,
+# verifies it, then deletes the original directory.
 
-if [ "${1: -1}" == "/" ]
-then
-	OUTNAME="${1::-1}".tar.gz
-else
-	OUTNAME="$1".tar.gz
+set -o pipefail
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <directory>" >&2
+    exit 1
 fi
 
-tar -cvf - "$1" | gzip -v -9 - > $OUTNAME && rm -rf "$1"
+dir="${1%/}"    # strip one trailing slash
+
+if [ ! -d "$dir" ]; then
+    echo "Error: '$dir' is not a directory." >&2
+    exit 1
+fi
+
+parent="$(dirname -- "$dir")"
+name="$(basename -- "$dir")"
+outname="$dir.tar.gz"
+
+if tar -cvf - -C "$parent" -- "$name" | gzip -v -9 > "$outname" \
+   && tar -tzf "$outname" > /dev/null; then
+    rm -rf -- "$dir"
+else
+    echo "Error: archive creation or verification failed; '$dir' was not deleted." >&2
+    rm -f -- "$outname"
+    exit 1
+fi

@@ -1,5 +1,26 @@
 #!/bin/bash
 
-# $1 = tar.gz file you want to tar gunzip
+# Usage: targunzip.sh file.tar.gz
+# Extracts the archive into its own directory, then deletes the archive
+# only if extraction succeeded.
 
-tar -xvzf "$1" -C "$(dirname $1)" && rm -rf $1
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <file.tar.gz>" >&2
+    exit 1
+fi
+
+archive="$1"
+
+if [ ! -f "$archive" ]; then
+    echo "Error: '$archive' is not a file or does not exist." >&2
+    exit 1
+fi
+
+dest="$(dirname -- "$archive")"
+
+if tar -xvzf "$archive" -C "$dest"; then
+    rm -f -- "$archive"
+else
+    echo "Error: extraction failed, '$archive' was not deleted." >&2
+    exit 1
+fi
